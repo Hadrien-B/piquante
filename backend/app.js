@@ -28,6 +28,6 @@ app.use(bodyParser.json());
 
 
 app.use('/api/sauces', saucesRoutes);
-app.user('/api/auth/', userRoutes);
+app.use('/api/auth/', userRoutes);
 
 module.exports = app;
