@@ -1,6 +1,7 @@
 const express = require('express');//Importation de Express
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');//Importation de mongoDB
+const path = require('path');
 
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
@@ -14,6 +15,7 @@ mongoose.connect('mongodb+srv://hadrien:Tagadatagada@first.isqrjh7.mongodb.net/?
 const app = express();
 
 app.use(express.json());//Middleware permettant d'intercepter une requête POST
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //CORS - sécurité
 app.use((req, res, next) => {
