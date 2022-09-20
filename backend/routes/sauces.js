@@ -11,5 +11,6 @@ router.put('/:id',auth, multer, saucesCtrl.modifySauce);//route PUT permettant d
 router.delete('/:id',auth, saucesCtrl.deleteSauce);//route POST permettant de supprimer une nouvelle sauce
 router.get('/:id',auth, saucesCtrl.getOneSauce);//route POST permettant de récupérer une sauce
 router.get('/',auth, saucesCtrl.getAllSauce);//route POST permettant de récupérér toutes les sauces
+router.post('/:id', auth, saucesCtrl.likeSauce);//Route POST permettant de récupérer les likes et dislikes
 
 module.exports = router;
