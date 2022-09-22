@@ -5,5 +5,6 @@ const route = require('./sauces');
 
 router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
+router.put('/login', userCtrl.login);
 
 module.exports = router;
