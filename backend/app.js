@@ -7,7 +7,7 @@ require('dotenv').config();
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
-mongoose.connect(`mongodb+srv://${process.env.Mongo_User}:${process.env.Mongo_PSWD}@${process.env.Mongo_Host}/?retryWrites=true&w=majority`,//connexion à mongoDB
+mongoose.connect(`mongodb+srv://${process.env.Mongo_User}:${process.env.Mongo_PSWD}@${process.env.Mongo_Host}/?retryWrites=true&w=majority`,//connexion à mongoDB et protection des données grâce à une variable d'environnement
 { useNewUrlParser: true,
   useUnifiedTopology: true })
 .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -16,7 +16,7 @@ mongoose.connect(`mongodb+srv://${process.env.Mongo_User}:${process.env.Mongo_PS
 const app = express();
 
 app.use(express.json());//Middleware permettant d'intercepter une requête POST
-app.use('/images', express.static(path.join(__dirname, 'images')));
+
 
 //CORS - sécurité
 app.use((req, res, next) => {
@@ -32,5 +32,6 @@ app.use(bodyParser.json());
 
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth/', userRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
