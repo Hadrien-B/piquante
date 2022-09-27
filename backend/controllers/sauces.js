@@ -1,20 +1,20 @@
 const Sauce = require('../models/sauce');
 const fs = require('fs');
 
-exports.createSauce = (req, res, next) => {
+exports.createSauce = (req, res, next) => {//Création d'une sauce
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
     delete sauceObject._userId;
     const sauce = new Sauce({
         ...sauceObject,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`//Enregistre l'image dans la base de données 
     });
     sauce.save()
         .then(() => { res.status(201).json({ message: 'Votre nouvelle sauce est enregistrée !' }) })
         .catch(error => { res.status(400).json({ error }) })
 };
 
-exports.modifySauce = (req, res, next) => {
+exports.modifySauce = (req, res, next) => {//Modification d'une sauce
     const sauceObject = req.file ? {
         ...JSON.parse(req.body.sauce),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -22,13 +22,13 @@ exports.modifySauce = (req, res, next) => {
 
     delete sauceObject._userId;
 
-    Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+    Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })//La sauce est mise à jour
         .then(() => res.status(200).json({ message: 'Votre sauce a été modifiée !' }))
         .catch(error => res.status(401).json({ error }));
 };
 
 
-exports.deleteSauce = (req, res, next) => {
+exports.deleteSauce = (req, res, next) => {//Suppression d'une sauce
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
             const filename = sauce.imageUrl.split('/images/')[1];
@@ -43,19 +43,19 @@ exports.deleteSauce = (req, res, next) => {
         });
 };
 
-exports.getOneSauce = (req, res, next) => {
+exports.getOneSauce = (req, res, next) => {//Récupération d'une seule sauce 
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => res.status(200).json(sauce))
         .catch(error => res.status(404).json({ error }));
 };
 
-exports.getAllSauce = (req, res, next) => {
+exports.getAllSauce = (req, res, next) => {//Récupération de toutes les sauces
     Sauce.find()
         .then(sauces => res.status(200).json(sauces))
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.likeSauce = (req, res, next) => {
+exports.likeSauce = (req, res, next) => {//Like ou dislike d'une sauce
     if (req.body.like === 1) {
         Sauce.updateOne({ _id: req.params.id }, { $inc: { likes: req.body.like++ }, $push: { usersLiked: req.body.userId } })
             .then((sauce) => res.status(200).json({ message: 'Ajout Like' }))
