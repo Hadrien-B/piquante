@@ -2,11 +2,12 @@ const express = require('express');//Importation de Express
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');//Importation de mongoDB
 const path = require('path');
+require('dotenv').config();
 
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
-mongoose.connect('mongodb+srv://hadrien:Tagadatagada@first.isqrjh7.mongodb.net/?retryWrites=true&w=majority',//connexion à mongoDB
+mongoose.connect(`mongodb+srv://${process.env.Mongo_User}:${process.env.Mongo_PSWD}@${process.env.Mongo_Host}/?retryWrites=true&w=majority`,//connexion à mongoDB
 { useNewUrlParser: true,
   useUnifiedTopology: true })
 .then(() => console.log('Connexion à MongoDB réussie !'))
