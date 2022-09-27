@@ -6,17 +6,17 @@ const User = require('../models/User');
 //création d'un compte utilisateur
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
-      .then(hash => {
-        const user = new User({
-          email: req.body.email,
-          password: hash
-        });
-        user.save()
-          .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-          .catch(error => res.status(400).json({ error }));
-      })
-      .catch(error => res.status(500).json({ error }));
-  };
+        .then(hash => {
+            const user = new User({
+                email: req.body.email,
+                password: hash
+            });
+            user.save()
+                .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+                .catch(error => res.status(400).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
+};
 
 //fonction qui vérifie l'existence d'un utilisateur et la validité du mot de passe renseigné
 exports.login = (req, res, next) => {
@@ -42,4 +42,4 @@ exports.login = (req, res, next) => {
                 .catch(error => res.status(500).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
- };
+};
