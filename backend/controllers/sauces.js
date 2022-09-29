@@ -32,7 +32,7 @@ exports.deleteSauce = (req, res, next) => {//Suppression d'une sauce
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
             const filename = sauce.imageUrl.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {
+            fs.unlink(`images/${filename}`, () => {//fonction fs de Node permettant de supprimer un fichier
                 Sauce.deleteOne({ _id: req.params.id })
                     .then(() => res.status(200).json({ message: 'La sauce a été supprimée !' }))
                     .catch(error => res.status(401).json({ error }));
