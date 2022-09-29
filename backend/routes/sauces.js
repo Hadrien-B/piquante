@@ -1,7 +1,7 @@
 const express = require('express');
 const auth = require('../middleware/auth');//middleware d'authentification
 const router = express.Router();
-const multer = require('../middleware/multer-config');
+const multer = require('../middleware/multer-config');//midlleware multer pour la gestion des images
 
 
 const saucesCtrl = require('../controllers/sauces');
